@@ -1,0 +1,467 @@
+<title>モーメントと圧力 特訓パック</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+:root{
+  --paper:#f6f7f4;
+  --card:#ffffff;
+  --ink:#20303c;
+  --ink-soft:#5a6b78;
+  --line:#dde3e0;
+  --accent:#2b6cb0;
+  --accent-soft:#e3edf8;
+  --marker:#ffe27a;
+  --ok:#2f855a;
+  --ok-bg:#e6f4ec;
+  --ng:#c0453e;
+  --ng-bg:#faeae9;
+  --grid:#e8ecea;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#161c22;
+    --card:#1f272f;
+    --ink:#e8edf2;
+    --ink-soft:#9fb0be;
+    --line:#374350;
+    --accent:#6ea8dd;
+    --accent-soft:#243646;
+    --marker:#8a6d1a;
+    --ok:#66bb8a;
+    --ok-bg:#1e3328;
+    --ng:#e08984;
+    --ng-bg:#3a2422;
+    --grid:#1d242b;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#161c22;
+  --card:#1f272f;
+  --ink:#e8edf2;
+  --ink-soft:#9fb0be;
+  --line:#374350;
+  --accent:#6ea8dd;
+  --accent-soft:#243646;
+  --marker:#8a6d1a;
+  --ok:#66bb8a;
+  --ok-bg:#1e3328;
+  --ng:#e08984;
+  --ng-bg:#3a2422;
+  --grid:#1d242b;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px, transparent 1px),linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:24px 24px;
+  color:var(--ink);
+  font-family:"Noto Sans JP",-apple-system,"Hiragino Sans",sans-serif;
+  line-height:1.75;
+  font-size:15.5px;
+}
+.wrap{max-width:680px;margin:0 auto;padding:20px 16px 80px}
+h1,h2,h3{font-family:"M PLUS Rounded 1c","Noto Sans JP",sans-serif;line-height:1.35;text-wrap:balance}
+h1{font-size:1.55rem;font-weight:800;margin:.2em 0 .1em}
+h2{font-size:1.2rem;font-weight:700;margin:0}
+h3{font-size:1.02rem;font-weight:700;margin:0 0 .4em}
+.sub{color:var(--ink-soft);font-size:.86rem;margin:0 0 4px}
+header.top{padding:8px 2px 18px}
+.due{display:inline-block;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:2px 12px;font-size:.8rem;color:var(--ink-soft);margin-top:8px}
+.due b{color:var(--ink)}
+.formula-box{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:14px 16px;margin:14px 0 0;
+}
+.formula-box .f{
+  font-weight:700;font-size:1.02rem;margin:4px 0;
+}
+.formula-box .f mark{
+  background:linear-gradient(transparent 55%, var(--marker) 55%);
+  color:inherit;padding:0 2px;
+}
+.step{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  margin:22px 0;padding:18px 16px;
+}
+.step-head{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+.step-num{
+  font-family:"M PLUS Rounded 1c",sans-serif;font-weight:800;
+  color:var(--accent);font-size:.82rem;letter-spacing:.08em;white-space:nowrap;
+}
+.step-goal{font-size:.84rem;color:var(--ink-soft);margin:2px 0 14px}
+.videos{display:flex;flex-direction:column;gap:10px}
+a.video{
+  display:block;border:1px solid var(--line);border-radius:12px;padding:12px 14px;
+  text-decoration:none;color:var(--ink);background:var(--paper);
+}
+a.video:active{background:var(--accent-soft)}
+a.video .vt{font-weight:700;color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+a.video .vd{font-size:.83rem;color:var(--ink-soft);margin-top:2px}
+.checkline{border-left:3px solid var(--accent);padding:2px 0 2px 12px;margin-top:14px;font-size:.9rem}
+.vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(min-width:520px){.vocab-grid{grid-template-columns:1fr 1fr 1fr}}
+button{font-family:inherit}
+.vcard{
+  border:1px solid var(--line);border-radius:12px;background:var(--paper);
+  padding:10px 8px;min-height:74px;cursor:pointer;text-align:center;
+  display:flex;flex-direction:column;justify-content:center;gap:2px;
+}
+.vcard .en{font-weight:700;font-size:.95rem;color:var(--ink)}
+.vcard .ja{font-size:.83rem;color:var(--ink-soft)}
+.vcard .ja[hidden]{display:none!important}
+.vcard.revealed{background:var(--accent-soft);border-color:var(--accent)}
+.hint{font-size:.82rem;color:var(--ink-soft);margin:0 0 10px}
+.drill{border-top:1px dashed var(--line);padding:14px 0 4px;margin-top:14px}
+.drill:first-of-type{border-top:none;margin-top:0}
+.drill .q{font-weight:500;margin:0 0 8px}
+.drill .q .no{font-family:"M PLUS Rounded 1c",sans-serif;font-weight:800;color:var(--accent);margin-right:6px}
+.reveal-btn{
+  border:1px solid var(--accent);color:var(--accent);background:none;
+  border-radius:999px;padding:5px 16px;font-size:.85rem;font-weight:700;cursor:pointer;
+}
+.reveal-btn:focus-visible,.vcard:focus-visible,.opt:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.answer{
+  background:var(--ok-bg);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:.92rem;
+}
+.answer[hidden]{display:none!important}
+.answer .steps{margin:0;padding-left:1.2em}
+.qcard{border:1px solid var(--line);border-radius:14px;padding:14px 14px 12px;margin:12px 0;background:var(--paper)}
+.qcard .qno{font-family:"M PLUS Rounded 1c",sans-serif;font-weight:800;font-size:.8rem;color:var(--accent);letter-spacing:.05em}
+.qcard .qtext{font-weight:500;margin:4px 0 10px}
+.qcard .qtext .en{font-size:1rem}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{
+  text-align:left;border:1px solid var(--line);border-radius:10px;background:var(--card);
+  padding:9px 12px;font-size:.93rem;cursor:pointer;color:var(--ink);line-height:1.5;
+}
+.opt:disabled{cursor:default;opacity:1}
+.opt.correct{background:var(--ok-bg);border-color:var(--ok);font-weight:700}
+.opt.wrong{background:var(--ng-bg);border-color:var(--ng)}
+.expl{margin-top:10px;font-size:.9rem;background:var(--accent-soft);border-radius:10px;padding:10px 14px}
+.expl[hidden]{display:none!important}
+.expl .page{display:block;margin-top:6px;font-size:.82rem;color:var(--ink-soft)}
+.verdict{font-weight:800;font-family:"M PLUS Rounded 1c",sans-serif}
+.verdict.ok{color:var(--ok)}
+.verdict.ng{color:var(--ng)}
+.scorebar{
+  position:sticky;top:0;z-index:5;background:var(--card);border:1px solid var(--line);
+  border-radius:999px;padding:8px 18px;margin:0 0 14px;display:flex;justify-content:space-between;
+  align-items:center;font-size:.9rem;box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+.scorebar b{font-family:"M PLUS Rounded 1c",sans-serif;font-size:1.05rem;font-variant-numeric:tabular-nums}
+.reset{border:none;background:none;color:var(--ink-soft);font-size:.8rem;cursor:pointer;text-decoration:underline;text-underline-offset:2px;padding:2px}
+.finish{margin-top:16px;border-radius:12px;padding:14px 16px;font-size:.95rem;background:var(--accent-soft)}
+.finish[hidden]{display:none!important}
+.report{width:100%;margin-top:10px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-family:inherit;font-size:.85rem;line-height:1.6;padding:10px 12px;resize:vertical;min-height:120px}
+.send-btn{
+  display:block;width:100%;margin-top:10px;border:none;border-radius:10px;
+  background:var(--accent);color:#fff;font-weight:700;font-size:.95rem;
+  padding:12px;cursor:pointer;font-family:"M PLUS Rounded 1c",sans-serif;
+}
+.send-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.sent-note{font-size:.83rem;color:var(--ok);font-weight:700;margin-top:6px;text-align:center}
+.sent-note[hidden]{display:none!important}
+footer{color:var(--ink-soft);font-size:.8rem;text-align:center;margin-top:30px}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <p class="sub">Wayground「Moments and Pressure」対策</p>
+  <h1>モーメントと圧力 特訓パック</h1>
+  <p class="sub">Cambridge Science Book 8 / Unit 3.4–3.5（p.91〜105）</p>
+  <span class="due">クイズ提出期限：<b>9月12日（金）11:00</b></span>
+
+  <div class="formula-box">
+    <div class="sub">覚える公式はこの2つだけ</div>
+    <div class="f">① <mark>moment（モーメント） = force（力） × distance（距離）</mark>　単位: Nm ※距離はmに直す！</div>
+    <div class="f">② <mark>pressure（圧力） = force（力） ÷ area（面積）</mark>　単位: N/cm² など</div>
+  </div>
+</header>
+
+<!-- STEP 1 -->
+<section class="step">
+  <div class="step-head"><span class="step-num">STEP 1</span><h2>日本語の動画で理屈を入れる</h2></div>
+  <p class="step-goal">ゴール：「面積が小さいと圧力が大きい」「モーメント＝力×距離」を日本語で説明できる</p>
+  <div class="videos">
+    <a class="video" href="https://www.youtube.com/watch?v=hUbfpTxUAXQ" target="_blank" rel="noopener">
+      <span class="vt">▶ 圧力の単位と求め方（Try IT・18分）</span>
+      <div class="vd">先に見る。クイズ20問中12問がこの内容</div>
+    </a>
+    <a class="video" href="https://www.youtube.com/watch?v=TflO2NZo0hg" target="_blank" rel="noopener">
+      <span class="vt">▶ 力のモーメント（Try IT・21分）</span>
+      <div class="vd">「高校物理」とあるけど今回のクイズと同じレベル。難しかったらYouTubeで「てこ つり合い」を検索して差し替えOK</div>
+    </a>
+  </div>
+  <div class="checkline">
+    <b>見終わったらお母さんに答える2問：</b><br>
+    ・画びょうの先が尖っているのはなぜ？<br>
+    ・シーソーで軽い人はどこに座るとつり合う？
+  </div>
+</section>
+
+<!-- STEP 2 -->
+<section class="step">
+  <div class="step-head"><span class="step-num">STEP 2</span><h2>英単語カード</h2></div>
+  <p class="step-goal">ゴール：クイズに出る英単語15個を見て意味が言える</p>
+  <p class="hint">カードをタップすると日本語が出るよ。まず自分で言ってからタップ！</p>
+  <div class="vocab-grid" id="vocab"></div>
+</section>
+
+<!-- STEP 3 -->
+<section class="step">
+  <div class="step-head"><span class="step-num">STEP 3</span><h2>計算ドリル</h2></div>
+  <p class="step-goal">ゴール：計算3パターン（圧力・モーメント・cm→m変換）を間違えない</p>
+  <div id="drills"></div>
+</section>
+
+<!-- STEP 4 -->
+<section class="step">
+  <div class="step-head"><span class="step-num">STEP 4</span><h2>模擬テスト（英語・20問）</h2></div>
+  <p class="step-goal">ゴール：20/20。本番と同じく英語で出すよ（数字は変えてある）。間違えたら解説と教科書ページへ</p>
+  <div class="scorebar">
+    <span>スコア：<b id="score">0</b> / <b id="answered">0</b>（全20問）</span>
+    <button class="reset" id="resetBtn" type="button">リセット</button>
+  </div>
+  <div id="quiz"></div>
+  <div class="finish" id="finish" hidden></div>
+</section>
+
+<footer>まちがえても大丈夫、本番前に気づけたらむしろラッキー🍀<br>復習用の詳しい解説は、お母さんが持っている「クイズ解説ノート」を見てね</footer>
+</div>
+
+<script>
+/* ---------- STEP 2: vocab ---------- */
+const VOCAB=[
+["pressure","圧力"],
+["force","力"],
+["area","面積"],
+["surface area","表面積・接する面積"],
+["moment","モーメント（回す力）"],
+["turning effect","回転させるはたらき"],
+["pivot","支点"],
+["lever","てこ"],
+["load","作用点・持ち上げたい物"],
+["effort","力点・自分が押す力"],
+["balanced","つり合っている"],
+["anticlockwise","反時計回り（⟲）"],
+["clockwise","時計回り（⟳）"],
+["exert","（力・圧力を）およぼす"],
+["weight","重さ（力の一種・単位N）"]
+];
+const vg=document.getElementById("vocab");
+VOCAB.forEach(([en,ja])=>{
+  const b=document.createElement("button");
+  b.type="button";b.className="vcard";
+  b.innerHTML='<span class="en">'+en+'</span><span class="ja" hidden>'+ja+'</span>';
+  b.addEventListener("click",()=>{
+    const jaEl=b.querySelector(".ja");
+    jaEl.hidden=!jaEl.hidden;
+    b.classList.toggle("revealed",!jaEl.hidden);
+  });
+  vg.appendChild(b);
+});
+
+/* ---------- STEP 3: drills ---------- */
+const DRILLS=[
+{q:"力 400 N が面積 100 cm² にかかっている。圧力は？",
+ a:["pressure = force ÷ area","= 400 ÷ 100 = <b>4 N/cm²</b>"]},
+{q:"力 900 N が面積 300 cm² にかかっている。圧力は？",
+ a:["= 900 ÷ 300 = <b>3 N/cm²</b>","圧力は「割り算」。掛けたら 270 000 になっちゃう（ひっかけ選択肢の定番）"]},
+{q:"支点から 0.3 m のところに 10 N の力。モーメントは？",
+ a:["moment = force × distance","= 10 × 0.3 = <b>3 Nm</b>"]},
+{q:"⚠️ 支点から 50 cm のところに 8 N の力。モーメントは？（Nmで）",
+ a:["まず 50 cm = <b>0.5 m</b> に直す！","= 8 × 0.5 = <b>4 Nm</b>","cmのまま掛けて400にしない。本番にもこのひっかけが1問ある"]},
+{q:"シーソー：右側は 500 N × 2 m。左側の人は 250 N。つり合うには支点から何m？",
+ a:["右のモーメント = 500 × 2 = 1000 Nm","左も1000にする：1000 ÷ 250 = <b>4 m</b>","軽い人ほど遠くに座る"]},
+{q:"逆算：圧力 2 N/cm² を面積 150 cm² にかけたい。必要な力は？",
+ a:["force = pressure × area（式の変形）","= 2 × 150 = <b>300 N</b>","教科書 p.103 と同じタイプ"]}
+];
+const dwrap=document.getElementById("drills");
+DRILLS.forEach((d,i)=>{
+  const div=document.createElement("div");
+  div.className="drill";
+  div.innerHTML='<p class="q"><span class="no">Q'+(i+1)+'</span>'+d.q+'</p>'+
+    '<button class="reveal-btn" type="button">答えを見る</button>'+
+    '<div class="answer" hidden><ul class="steps">'+d.a.map(s=>"<li>"+s+"</li>").join("")+'</ul></div>';
+  const btn=div.querySelector("button"),ans=div.querySelector(".answer");
+  btn.addEventListener("click",()=>{ans.hidden=!ans.hidden;btn.textContent=ans.hidden?"答えを見る":"答えを隠す";});
+  dwrap.appendChild(div);
+});
+
+/* ---------- STEP 4: mock quiz ---------- */
+/* 各問: en=英語問題文, ja=日本語ヒント訳, opts, c=正解index, ex=解説, pg=教科書ページ */
+const QUIZ=[
+{en:"What do you divide force by to calculate pressure?",ja:"圧力を求めるには力を何で割る？",
+ opts:["volume","area","mass","length"],c:1,
+ ex:"pressure = force ÷ area（圧力＝力÷面積）。分母は面積。",pg:"p.100 ページ中ほどの枠の式「pressure = force/area」"},
+{en:"You want to lift a heavy rock with a long bar. Where should you put the pivot to lift it most easily?",ja:"重い岩をてこで一番楽に持ち上げるには、支点をどこに置く？",
+ opts:["Close to your hands","In the middle of the bar","Close to the rock","It does not matter"],c:2,
+ ex:"支点を岩（load）の近くに置くと、力点側の距離が長くなる→小さい力で大きなモーメントが出せる。",pg:"p.92 後半「Calculating moments」の箇条書き2つ目（距離が大きいほどモーメント大）"},
+{en:"A force of 800 N acts on an area of 200 cm². What pressure does it produce?",ja:"800Nの力が200cm²にかかる。圧力は？",
+ opts:["0.25 N/cm²","4 N/cm²","160 000 N/cm²","200 N/cm²"],c:1,
+ ex:"800 ÷ 200 = 4 N/cm²。掛け算（160 000）を選ばない、圧力は割り算。",pg:"p.102 後半のWorked example（自転車タイヤ：500÷5=100 N/cm²）と同じ手順"},
+{en:"A nail has a sharp point so that…",ja:"釘の先が尖っているのは…",
+ opts:["the pressure on the wood is decreased","the force becomes bigger","the pressure on the wood is increased","the nail becomes lighter"],c:2,
+ ex:"先端の面積が小さい→同じ力でも圧力が大きくなり、木に入りやすい。力そのものは大きくならない。",pg:"p.101 中ほど、画びょう（pin）の段落「One end of this pin has a sharp point…」"},
+{en:"A force of 12 N is applied 0.5 m from a pivot. What is the moment of the force?",ja:"支点から0.5mに12Nの力。モーメントは？",
+ opts:["12.5 Nm","24 Nm","0.6 Nm","6 Nm"],c:3,
+ ex:"moment = 12 × 0.5 = 6 Nm。足し算・割り算にしない、モーメントは掛け算。",pg:"p.92 いちばん下の式 → p.93 前半のWorked example（ドア：35×0.8=28 Nm）"},
+{en:"The amount of force pushing on an area is called…",ja:"面積あたりにかかる力のことを何と言う？",
+ opts:["friction","gravity","pressure","viscosity"],c:2,
+ ex:"これが圧力（pressure）の定義。friction=摩擦、gravity=重力、viscosity=粘性。",pg:"p.100 前半の一文「You can think of pressure as the pushing effect of a force.」"},
+{en:"The moment of a force is…",ja:"力のモーメントとは…",
+ opts:["how far the object moves","its turning effect","the time it takes to act","the distance from the pivot"],c:1,
+ ex:"モーメント＝力の「回転させるはたらき（turning effect）」。距離はモーメントを計算する材料であって、モーメントそのものではない。",pg:"p.92 後半「Calculating moments」の最初の文（The moment of a force describes its turning effect）"},
+{en:"Two boxes have the same weight. Box A stands on a small base, Box B stands on a large base. Which is true?",ja:"同じ重さの箱AとB。Aは底が小さく、Bは底が大きい。正しいのは？",
+ opts:["Box A exerts greater pressure on the floor","Box B exerts greater pressure on the floor","They exert the same pressure","Box B exerts a greater force"],c:0,
+ ex:"重さ（力）が同じなら、接する面積が小さい方が圧力が大きい。ピンヒール vs ブーツと同じ理屈。",pg:"p.100 後半の箇条書き「as the area decreases, the pressure increases」"},
+{en:"On a seesaw: Girl 400 N at 3 m from the pivot. Boy 600 N. How far from the pivot must the boy sit to balance?",ja:"シーソー：女の子400N×3m。600Nの男の子は支点から何mでつり合う？",
+ opts:["1 m","2 m","3 m","4 m"],c:1,
+ ex:"400 × 3 = 1200 Nm。1200 ÷ 600 = 2 m。重い人ほど支点の近くに座る。",pg:"p.94「Balancing」のWorked example（600N×2m=1200Nm → 800Nの人は1.5m）"},
+{en:"In science, a lever is…",ja:"理科で「てこ」とは…",
+ opts:["a machine that changes the area of a force","a simple machine that changes the size of the force you put in","a machine that measures pressure","a type of pivot"],c:1,
+ ex:"てこ＝入れた力の大きさを変えられる単純機械（simple machine）。変えるのは力の大きさ、面積ではない。",pg:"p.92 前半の段落「The object that turns is called a lever.」"},
+{en:"Which equation is correct?",ja:"正しい式はどれ？",
+ opts:["pressure = area ÷ force","pressure = force × area","pressure = force ÷ area","pressure = mass ÷ volume"],c:2,
+ ex:"pressure = force/area。分子と分母を逆にしたひっかけに注意。mass÷volumeは密度の式。",pg:"p.100 ページ中ほどの枠の式「pressure = force/area」"},
+{en:"Snowshoes are wide and flat so that they…",ja:"雪ぐつ（かんじき）が幅広で平らなのは…",
+ opts:["increase the force on the snow","decrease the pressure on the snow","increase the pressure on the snow","decrease the person's weight"],c:1,
+ ex:"面積を大きくして圧力を小さくする→雪に沈まない。戦車のキャタピラ・ラクダの足も同じ。重さは変わらない。",pg:"p.101 いちばん上のラクダの段落（面積大→圧力小）＋p.103 問1b（雪の上を歩く靴）"},
+{en:"A dancer weighs 600 N and stands on one foot. The area of the foot is 300 cm². What is the pressure on the floor?",ja:"600Nのダンサーが片足立ち。足の面積300cm²。床への圧力は？",
+ opts:["2 N/cm²","0.5 N/cm²","300 N/cm²","180 000 N/cm²"],c:0,
+ ex:"600 ÷ 300 = 2 N/cm²。片足に全体重＝力は600Nのまま、面積だけ片足分。",pg:"p.102 前半のWorked example（ゾウ：50000÷0.4）と同じ割り算"},
+{en:"Scissors have sharp blades because…",ja:"ハサミの刃が鋭いのは…",
+ opts:["a small area makes the pressure greater","a large area makes the pressure greater","a small area makes the pressure smaller","sharp blades are stronger"],c:0,
+ ex:"刃先の面積が小さい→圧力が大きい→切れる。鋭いナイフと同じ理屈。",pg:"p.101 いちばん下の段落「Scissors have sharp blades…」がこの問題そのもの"},
+{en:"In a lever, the fixed point that the lever turns around is called the…",ja:"てこが回転する中心の点を何と言う？",
+ opts:["load","effort","pivot","moment"],c:2,
+ ex:"pivot＝支点。load＝動かしたい物（作用点）、effort＝自分が加える力（力点）。3点セットで覚える。",pg:"p.92 中ほどの一文「The point around which the lever turns is called the pivot.」"},
+{en:"Pressure measures…",ja:"圧力が表しているのは…",
+ opts:["the strength of a material","the force exerted on a given area","the speed of a force","the weight of an object"],c:1,
+ ex:"圧力＝「決まった面積にかかる力」。単なる強さや重さではない。",pg:"p.100 前半（pushing effect の一文）＋中ほどの式"},
+{en:"A crane holds a load of 3000 N at 20 m on the left of the tower. What is the anticlockwise moment?",ja:"クレーンの左20mに3000Nの荷物。反時計回りのモーメントは？",
+ opts:["23 000 Nm","6 000 Nm","80 000 Nm","60 000 Nm"],c:3,
+ ex:"3000 × 20 = 60 000 Nm。左側の荷物が反時計回り（⟲）に回そうとする。右側の重りとつり合えばクレーンは倒れない。",pg:"計算はp.92下の式、つり合いはp.94前半「moments on both sides … equal and opposite」"},
+{en:"You push a thumbtack with one force. The point (0.5 mm²) and the head (100 mm²) feel the same force. Where is the pressure greater?",ja:"画びょうを押すと、先端(0.5mm²)と頭(100mm²)に同じ力がかかる。圧力が大きいのはどっち？",
+ opts:["At the sharp point","At the wide head","Same at both","Neither has pressure"],c:0,
+ ex:"同じ力なら面積が小さい方が圧力大。だから先は壁に刺さり、頭は指に刺さらない。",pg:"p.101 中ほど、画びょうの段落（先端＝圧力大で刺さる／頭＝圧力小で指を守る）"},
+{en:"Four animals have the same weight. Which sinks least into soft sand?",ja:"同じ体重の動物4匹。柔らかい砂に一番沈まないのは？",
+ opts:["A horse with small hard hooves","A camel with wide flat feet","A goat with pointed hooves","A deer standing on two legs"],c:1,
+ ex:"沈まない＝圧力が小さい＝足の面積が大きい。ラクダの幅広の足は教科書p.101の実例。水鳥の水かきも同じ。",pg:"p.101 いちばん上の段落「The camel has large feet…」（砂に沈まない理由）"},
+{en:"You open a paint can with a screwdriver. You apply 5 N at 40 cm from the pivot. What is the moment?",ja:"ドライバーで缶を開ける。支点から40cmに5N。モーメントは？",
+ opts:["200 Nm","2 Nm","20 Nm","0.5 Nm"],c:1,
+ ex:"⚠️ 40 cm = 0.4 m に直してから！ 5 × 0.4 = 2 Nm。cmのまま掛けると200（ひっかけ）。",pg:"p.93 前半（距離の単位はm・モーメントはNm）＋p.97 手順2の注意「cmやmmからmに変換」"}
+];
+
+const TOPICS=["圧力の式","てこの支点の位置","圧力の計算","釘の先と圧力","モーメントの計算","圧力の定義","モーメントとは","面積と圧力","シーソーのつり合い","てことは","圧力の式えらび","雪ぐつと圧力","片足立ちの圧力","ハサミの刃","支点の英単語","圧力が表すもの","クレーンのモーメント","画びょうの圧力","砂に沈まない動物","cm→m変換"];
+
+function buildReport(){
+  const now=new Date();
+  const pad=n=>String(n).padStart(2,"0");
+  const keys=Object.keys(state);
+  const score=keys.filter(k=>state[k].ok).length;
+  const wrong=[];
+  for(let i=0;i<QUIZ.length;i++){
+    if(state[i]&&!state[i].ok)wrong.push("Q"+(i+1)+"（"+TOPICS[i]+"）");
+  }
+  return "【モーメントと圧力 模擬テスト結果】\n"+
+    now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+pad(now.getHours())+":"+pad(now.getMinutes())+" 完了\n"+
+    "スコア: "+score+" / "+QUIZ.length+"\n"+
+    (wrong.length?"まちがえた問題: "+wrong.join(", "):"全問正解！🎉");
+}
+
+const quizWrap=document.getElementById("quiz");
+const scoreEl=document.getElementById("score");
+const answeredEl=document.getElementById("answered");
+const finishEl=document.getElementById("finish");
+let state={};
+try{state=JSON.parse(localStorage.getItem("momoQuizV1")||"{}")||{};}catch(e){state={};}
+
+function save(){try{localStorage.setItem("momoQuizV1",JSON.stringify(state));}catch(e){}}
+
+function renderScore(){
+  const keys=Object.keys(state);
+  const score=keys.filter(k=>state[k].ok).length;
+  scoreEl.textContent=score;
+  answeredEl.textContent=keys.length;
+  if(keys.length===QUIZ.length){
+    finishEl.hidden=false;
+    let msg;
+    if(score===QUIZ.length){
+      msg="🎉 <b>20/20 パーフェクト！</b> 本番も同じ調子でいけるよ。期限（9/12 11:00）より前の、頭がすっきりしてる時間に受けよう。";
+    }else{
+      msg="結果：<b>"+score+" / 20</b>。まちがえた問題の解説と教科書ページを読んでから「リセット」でもう一周！ 全問◯になったら本番へ。";
+    }
+    finishEl.innerHTML=msg+
+      '<div style="margin-top:10px;font-weight:700">📨 この結果をお母さんに送ろう</div>'+
+      '<textarea class="report" id="reportText" readonly></textarea>'+
+      '<button class="send-btn" id="copyBtn" type="button">結果をコピーする</button>'+
+      '<div class="sent-note" id="sentNote" hidden></div>';
+    document.getElementById("reportText").value=buildReport();
+    document.getElementById("copyBtn").addEventListener("click",async()=>{
+      const txt=document.getElementById("reportText").value;
+      const note=document.getElementById("sentNote");
+      if(navigator.share){
+        try{await navigator.share({text:txt});note.textContent="送信画面を開いたよ！";note.hidden=false;return;}catch(e){}
+      }
+      try{
+        await navigator.clipboard.writeText(txt);
+        note.textContent="コピーできた！ LINEやメールに貼りつけて送ってね";
+      }catch(e){
+        const ta=document.getElementById("reportText");
+        ta.focus();ta.select();
+        note.textContent="上の文を全選択してコピーしてね（自動コピーできなかった）";
+      }
+      note.hidden=false;
+    });
+  }else{
+    finishEl.hidden=true;
+  }
+}
+
+QUIZ.forEach((q,i)=>{
+  const card=document.createElement("div");
+  card.className="qcard";
+  card.innerHTML='<div class="qno">Q'+(i+1)+' / 20</div>'+
+    '<div class="qtext"><span class="en">'+q.en+'</span></div>'+
+    '<div class="opts"></div>'+
+    '<div class="expl" hidden></div>';
+  const optsEl=card.querySelector(".opts");
+  const explEl=card.querySelector(".expl");
+  q.opts.forEach((o,oi)=>{
+    const b=document.createElement("button");
+    b.type="button";b.className="opt";b.textContent=String.fromCharCode(65+oi)+".  "+o;
+    b.addEventListener("click",()=>answer(i,oi));
+    optsEl.appendChild(b);
+  });
+  function paint(){
+    const st=state[i];
+    if(!st)return;
+    const btns=optsEl.querySelectorAll(".opt");
+    btns.forEach((b,oi)=>{
+      b.disabled=true;
+      if(oi===q.c)b.classList.add("correct");
+      else if(oi===st.pick)b.classList.add("wrong");
+    });
+    explEl.hidden=false;
+    explEl.innerHTML=(st.ok?'<span class="verdict ok">◯ 正解！</span> ':'<span class="verdict ng">✗ ざんねん…正解は '+String.fromCharCode(65+q.c)+'</span> ')+
+      '<div style="margin-top:4px">🇯🇵 '+q.ja+'</div><div style="margin-top:4px">'+q.ex+'</div>'+
+      '<span class="page">📖 教科書 '+q.pg+'</span>';
+  }
+  function answer(qi,pick){
+    if(state[qi])return;
+    state[qi]={pick:pick,ok:pick===q.c};
+    save();paint();renderScore();
+  }
+  card._paint=paint;
+  quizWrap.appendChild(card);
+  paint();
+});
+renderScore();
+
+document.getElementById("resetBtn").addEventListener("click",()=>{
+  state={};save();
+  quizWrap.innerHTML="";
+  location.reload();
+});
+</script>
